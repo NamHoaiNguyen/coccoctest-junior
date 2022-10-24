@@ -6,9 +6,9 @@
 #include "dimension_command.h"
 #include "line_command.h"
 #include "move_command.h"
-#include "parser.h"
+#include "../parser/parser.h"
 
-#include<assert.h>
+#include <assert.h>
 
 class Algo : public State, public std::enable_shared_from_this<Algo> {
     private:
@@ -20,12 +20,14 @@ class Algo : public State, public std::enable_shared_from_this<Algo> {
 
         std::unordered_map<std::string, std::shared_ptr<Command>> _setCommand;
 
+        std::vector<LineAxis> _result;
+
         /*
         This variable is used to save the previous command and current axis
         Need to save the previous command because that we need to know which
         class hold information about current axis(MOVE or LINE)
         */
-        Data _prevData;
+        Data _prevData = {};
 
     public:
         explicit Algo(std::shared_ptr<Parser> parser) : _parser{parser} {
@@ -39,6 +41,8 @@ class Algo : public State, public std::enable_shared_from_this<Algo> {
         void execute();
 
         Data getPrevData();
+
+        void setResultForRender();
 
         void testInit();
 };

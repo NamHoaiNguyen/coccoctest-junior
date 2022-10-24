@@ -1,5 +1,8 @@
 #include "algo.h"
+#include "bitmap.h"
+#include "console.h"
 #include "parser.h"
+#include "renderer.h"
 #include "program_context.h"
 
 #include <iostream>
@@ -19,6 +22,8 @@ int validateInput(int argc, char* argv[]) {
     }
 
     std::cout << path << " " << std::endl;
+
+    return 0;
 }
 
 int main(int argc, char* argv[])
@@ -48,11 +53,21 @@ int main(int argc, char* argv[])
     ProgramContext context;
 
     auto parser = std::make_shared<Parser>(std::move(path));
+    auto algo = std::make_shared<Algo>(parser);
+    std::shared_ptr<Renderer> bitmap = std::make_shared<Bitmap>(algo);
+    std::shared_ptr<Renderer> console = std::make_shared<Console>(algo);
+
 
     context.setState(parser);
     context.applyState();
 
-    context.setState(std::make_shared<Algo>(parser));
+    context.setState(algo);
+    context.applyState();
+
+    context.setState(bitmap);
+    context.applyState();
+
+    context.setState(console);
     context.applyState();
     
 }

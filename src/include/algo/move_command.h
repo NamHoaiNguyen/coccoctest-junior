@@ -20,7 +20,6 @@ class Move : public Command {
 
         std::weak_ptr<Algo> _algo;
 
-
         std::vector<Data> _historyMoves;
 
         std::vector<Axis> _history;

@@ -23,7 +23,7 @@ void Move::setUpParams(const Data& data) {
         prevData = subscriber->getPrevData();
     }
 
-    std::cout << prevData.command << " " << prevData.axis.first << " " << prevData.axis.second << " " << __FILE__ << " " << __func__ << std::endl;
+    // std::cout << prevData.command << " " << prevData.axis.first << " " << prevData.axis.second << " " << __FILE__ << " " << __func__ << std::endl;
 
 }
 

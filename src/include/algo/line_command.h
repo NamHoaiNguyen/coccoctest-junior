@@ -9,13 +9,13 @@
 #include <unordered_map>
 #include <vector>
 
+struct LineAxis {
+    int x;
+    int y;
+};
+
 class Line : public Command {
     private:
-        struct LineAxis {
-            int x;
-            int y;
-        };
-
         std::shared_ptr<Command> _command;
 
         std::weak_ptr<Algo> _algo;
@@ -28,6 +28,10 @@ class Line : public Command {
         /*Save axis of all points needed to render*/
         std::vector<LineAxis> _result;
 
+        int start_x = 0;
+
+        int start_y = 0;
+
     public:
         void handle(const Data& data) override;
 
@@ -38,6 +42,12 @@ class Line : public Command {
         void execute();
 
         void midPoint(int X1, int Y1, int X2, int Y2);
+
+        int roundt(float n);
+
+        void DDALine(int X1, int Y1, int X2, int Y2);
+
+        void checkResult();
 };
 
 #endif

@@ -1,15 +1,15 @@
-#ifndef CONSOLE_H
-#define CONSOLE_H
+#ifndef BITMAP_H
+#define BITMAP_H
 
 #include "../algo/algo.h"
 #include "renderer.h"
 
-class Console : public Renderer {
+class Bitmap : public Renderer {
     private:
         std::shared_ptr<Algo> _algo;
 
     public:
-        explicit Console(std::shared_ptr<Algo> algo) : _algo{algo} {
+        explicit Bitmap(std::shared_ptr<Algo> algo) : _algo{algo} {
 
         }
 
