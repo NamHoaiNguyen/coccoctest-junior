@@ -2,6 +2,7 @@
 #define MOVE_COMMAND_H
 
 #include "command.h"
+#include "../common/axis.h"
 #include "../common/command_data.h"
 
 #include <iostream>
@@ -11,25 +12,29 @@
 
 class Move : public Command {
     private:
-        struct Axis {
-            int axis_x;
-            int axis_y;
-        };
+        // struct Axis {
+        //     int axis_x;
+        //     int axis_y;
+        // };
 
         std::shared_ptr<Command> _command;
 
         std::weak_ptr<Algo> _algo;
 
-        std::vector<Data> _historyMoves;
+        std::vector<DataCommand> _historyMoves;
 
-        std::vector<Axis> _history;
+        std::vector<AxisAlgo> _history;
 
     public:
-        void handle(const Data& data) override;
+        void handle(const DataCommand& data) override;
 
         void addAlgo(std::weak_ptr<Algo> algo) override;
 
-        void setUpParams(const Data& data);
+        std::vector<AxisAlgo> getAxis() override; 
+
+        DimensionAlgo getDimension() override; 
+
+        void setUpParams(const DataCommand& data);
 };
 
 #endif

@@ -8,6 +8,10 @@ class Console : public Renderer {
     private:
         std::shared_ptr<Algo> _algo;
 
+        DimensionAlgo _dimension;
+
+        std::vector<AxisAlgo> _axisRender;
+
     public:
         explicit Console(std::shared_ptr<Algo> algo) : _algo{algo} {
 
@@ -16,7 +20,8 @@ class Console : public Renderer {
         void handleRequest() override; 
 
         void render() override;
-        
+
+        void getDataForRendering();
 };
 
 #endif

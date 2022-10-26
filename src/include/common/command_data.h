@@ -3,9 +3,18 @@
 
 #include<string>
 
-struct Data {
+struct DataCommand {
     std::string command;
     std::pair<std::string, std::string> axis;
+};
+
+struct AxisAlgo {
+    int x;
+    int y;
+};
+
+struct DimensionAlgo {
+    int dimension;
 };
 
 #endif

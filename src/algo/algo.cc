@@ -20,8 +20,6 @@ void Algo::initialize() {
             _setCommand[elem]->addAlgo(this->weak_from_this());
         }
     }
-
-    // testInit();
 }
 
 void Algo::execute() {
@@ -32,10 +30,7 @@ void Algo::execute() {
     int indexLine = 0;
 
     for (auto elem : _parser->_info) {
-        // std::cout << index << std::endl;
-        // std::cout << elem.command << " " <<  elem.axis.first << " " << elem.axis.second << " " << __FILE__ << " " << __func__  << " " << __LINE__ << std::endl;
         if (elem.command == "dimension") {
-            // std::cout << "check execute dimension 1" << std::endl;
             auto dimensionHandle = _setCommand.find(elem.command);
 
             assert(dimensionHandle != _setCommand.end());
@@ -59,8 +54,6 @@ void Algo::execute() {
                 lineHandle->second->handle(elem);
             }
         } else if (elem.command == "move_to") {
-            // std::cout << "check execute move_to 1" << std::endl;
-
             auto moveHandle = _setCommand.find(elem.command);
 
             assert(moveHandle != _setCommand.end());
@@ -69,7 +62,7 @@ void Algo::execute() {
                 moveHandle->second->handle(elem);
             }
         }
-        // std::cout << elem.command << " " <<  elem.axis.first << " " << elem.axis.second << " " << __FILE__ << " " << __func__  << " " << __LINE__ << std::endl;
+
         if (elem.command != "dimension") {
             _prevData = elem;
         }
@@ -77,25 +70,46 @@ void Algo::execute() {
         index++;
     }
 
-    setResultForRender();
+    setInfoForRender();
+    preprocessData();
 }
 
-void Algo::setResultForRender() {
-    // auto lineHandle = _setCommand["line_to"];
-    
-    // assert(lineHandle != _setCommand.end());
+void Algo::preprocessData() {
+    /*
+        Remove duplicates axis
+        Sort data based on axis
+        Then erase all duplicates axis.
+    */
+    std::sort(_result.begin(), _result.end(), [](const auto& a, const auto& b){
+        if (a.x == b.x)
+            return a.y < b.y;
+        return a.x < b.x;
+    });
 
-    // std::transform(lineHandle->_result.begin(), lineHandle->_result.end(), std::back_inserter(_result));
+    _result.erase(std::unique(_result.begin(), _result.end(), [](const auto& a, const auto& b){
+        return a.x == b.x &&  a.y == b.y;
+    }), _result.end());
 }
 
-Data Algo::getPrevData() {
+void Algo::setInfoForRender() {
+    auto dimensionHandle  = _setCommand.find("dimension");
+    auto lineHandle = _setCommand.find("line_to");
+
+    assert(dimensionHandle != _setCommand.end());
+    assert(lineHandle != _setCommand.end());
+
+    this->_result = lineHandle->second->getAxis();
+    this->_dimen = dimensionHandle->second->getDimension();
+}
+
+DataCommand Algo::getPrevData() {
     return this->_prevData;
 }
 
-void Algo::testInit() {
-    for (const auto& data : _parser->_info) {
-        for (const auto& elem : this->_setCommand) {
-            elem.second->handle(data);
-        }
-    }
+DimensionAlgo Algo::getDimension() {
+    return this->_dimen;
+}
+
+std::vector<AxisAlgo>& Algo::getAxisAlgo() {
+    return this->_result;
 }

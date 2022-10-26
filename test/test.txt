@@ -1,8 +1,6 @@
-DIMENSION 201
-line_to 0,6
-line_to 2,7
-line_to 5,3
-move_to 180,160
-lIne_To 200,180
-
-
+DIMENSION 9
+line_to                   2,  	2
+line_to		8,	 5
+move_to 	   8,			8
+line_to 	0,		6
+line_to					6 ,		7

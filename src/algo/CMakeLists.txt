@@ -17,7 +17,7 @@ add_library(
     dimension_command.cc
     line_command.cc
     move_command.cc
-    # ${ALGO_INCLUDE_FILES}
+    ${ALGO_INCLUDE_FILES}
 )
 
 target_include_directories(

@@ -33,27 +33,17 @@ class Parser : public State {
     private:    
         std::string _filePath;
 
-        std::string delimiter = ", ";
+        std::string delimiter = " ,";
 
         std::string delim = " ";
 
-        std::vector<Data> _info;
+        std::vector<DataCommand> _info;
 
         std::unordered_set<std::string> _setCommands;
-        
-        // std::unordered_map<std::string, std::shared_ptr<Command>> m_setCo,mand;
-
-        int a = 1; 
-
-        int b = 2;
 
         friend class Algo;
 
     public: 
-        // int a = 1; 
-
-        // int b = 2;
-
         Parser() = default;
 
         explicit Parser(std::string&& pathFile) : _filePath{pathFile} {
@@ -68,13 +58,7 @@ class Parser : public State {
 
         void parseData(std::ifstream& fp);
 
-        void createCommand();
-
-        // std::shared_ptr<Command> createDimensionCommand();
-
-        // std::shared_ptr<Command> createMoveCommand();
-
-        // std::shared_ptr<Command> createLineCommand();
+        void validateData();
 };  
 
 #endif

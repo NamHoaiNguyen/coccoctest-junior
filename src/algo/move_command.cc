@@ -1,23 +1,23 @@
 #include "move_command.h"
 #include "algo.h"
 
-void Move::handle(const Data& data) {
+void Move::handle(const DataCommand& data) {
     // std::cout << "move handle in algo folder" << std::endl;
     setUpParams(data);
 } 
 
-void Move::setUpParams(const Data& data) {
+void Move::setUpParams(const DataCommand& data) {
     // auto axis = std::make_pair<std::stoi(data.axis.first), std::stoi(data.axis.second)>;
-    Axis axis;
+    AxisAlgo axis;
 
-    axis.axis_x = std::stoi(data.axis.first);
-    axis.axis_y = std::stoi(data.axis.second);
+    axis.x = std::stoi(data.axis.first);
+    axis.y = std::stoi(data.axis.second);
     /*Care!!! Maybe segmant fault when adding reference to vector*/
     _historyMoves.push_back(data);
     _history.push_back(axis);
 
 
-    Data prevData;
+    DataCommand prevData;
 
     if (auto subscriber = this->_algo.lock(); subscriber) {
         prevData = subscriber->getPrevData();
@@ -26,6 +26,14 @@ void Move::setUpParams(const Data& data) {
     // std::cout << prevData.command << " " << prevData.axis.first << " " << prevData.axis.second << " " << __FILE__ << " " << __func__ << std::endl;
 
 }
+
+std::vector<AxisAlgo> Move::getAxis() {
+    return this->_history;
+}
+
+DimensionAlgo Move::getDimension() {
+    
+} 
 
 void Move::addAlgo(std::weak_ptr<Algo> algo) {
     this->_algo = algo;

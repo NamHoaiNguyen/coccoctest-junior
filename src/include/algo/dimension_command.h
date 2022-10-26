@@ -11,9 +11,14 @@ class Dimension:  public Command {
     private:
         std::vector<std::vector<int>> _square;
 
+        /*Store data returned for Algo*/
+        // std::vector<Data> _dataAlgo;
+
         std::weak_ptr<Algo> _algo;
         
         int _size;
+
+        DimensionAlgo _dimensionAlgo;
 
     public:
         Dimension() = default;
@@ -22,11 +27,15 @@ class Dimension:  public Command {
 
         }
 
-        void handle(const Data& data) override;
+        void handle(const DataCommand& data) override;
 
         void addAlgo(std::weak_ptr<Algo> algo) override;
 
-        void setSize(const Data& data);
+        std::vector<AxisAlgo> getAxis() override; 
+
+        DimensionAlgo getDimension() override; 
+        
+        void setSize(const DataCommand& data);
 };
 
 #endif
