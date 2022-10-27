@@ -2,8 +2,8 @@
 - Have a robot and a square grid N * N.
 - Robot moves and draw with the following commands:
   - DIMENSION N
-  - MOVE\_\TO X,Y
-  - LINE\_\TO X,Y
+  - MOVE\_TO X,Y
+  - LINE\_TO X,Y
 - Read the command from text file and write the output to the console.
 
 ## Requirement ##
