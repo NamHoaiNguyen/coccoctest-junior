@@ -41,8 +41,8 @@ void Algo::execute() {
         } else if (elem.command == "line_to") {
             if (index == 1 && indexLine == 0) {
                 this->_prevData.command = "line_to";
-                _prevData.axis.first = "0";
-                _prevData.axis.second = "0";
+                _prevData.axis.first = 0;
+                _prevData.axis.second = 0;
                 indexLine++;
             }
 

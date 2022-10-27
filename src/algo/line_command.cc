@@ -13,8 +13,8 @@ void Line::handle(const DataCommand& data) {
 void Line::setUpParams(const DataCommand& data) {
     AxisAlgo axis;
 
-    axis.x = std::stoi(data.axis.first);
-    axis.y = std::stoi(data.axis.second);
+    axis.x = (data.axis.first);
+    axis.y = (data.axis.second);
     /*Care!!! Maybe segmant fault when adding reference to vector*/
     this->_historyLine.push_back(axis);
     // this->_result.push_back(axis);
@@ -46,8 +46,8 @@ void Line::execute() {
 
     // std::cout << prevData.command << " " << prevData.axis.first << " " << prevData.axis.second << " " << __FILE__ << " " << __func__ << std::endl;
 
-    int prevAxis_x = std::stoi(prevData.axis.first);
-    int prevAxis_y = std::stoi(prevData.axis.second);
+    int prevAxis_x = (prevData.axis.first);
+    int prevAxis_y = (prevData.axis.second);
 
     // midPoint(prevAxis_x, prevAxis_y, _historyLine.back().x, _historyLine.back().y);
     DDALine(prevAxis_x, prevAxis_y, _historyLine.back().x, _historyLine.back().y);

@@ -10,8 +10,8 @@ void Move::setUpParams(const DataCommand& data) {
     // auto axis = std::make_pair<std::stoi(data.axis.first), std::stoi(data.axis.second)>;
     AxisAlgo axis;
 
-    axis.x = std::stoi(data.axis.first);
-    axis.y = std::stoi(data.axis.second);
+    axis.x = (data.axis.first);
+    axis.y = (data.axis.second);
     /*Care!!! Maybe segmant fault when adding reference to vector*/
     _historyMoves.push_back(data);
     _history.push_back(axis);

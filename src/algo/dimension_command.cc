@@ -6,7 +6,7 @@ void Dimension::handle(const DataCommand& data) {
 } 
 
 void Dimension::setSize(const DataCommand& data) {
-    this->_size = std::stoi(data.axis.first);
+    this->_size = (data.axis.first);
     // std::cout << this->_size << std::endl;
     _square.resize(this->_size, std::vector<int>(this->_size));
 

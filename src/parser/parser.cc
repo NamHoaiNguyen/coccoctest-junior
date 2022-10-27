@@ -69,12 +69,26 @@ void Parser::parseData(std::ifstream& fp) {
                 
                 token = axis.substr(beg, pos - beg);
                 if (!parseFirst) {
-                    data.axis.first = token;
-                    parseFirst = true;
+                    std::string new_token = token;
+                    try {
+                        data.axis.first = std::stoi(new_token);
+                        parseFirst = true;
+                    } catch (std::exception& e) {
+                        std::cout << "Syntax error of file is wrong!!!"  << "\n"
+                                  << "Please correct syntax of command" << std::endl;
+                        exit(1);
+                    }
                 }    
             }
             if (data.command != "dimension") {
-                data.axis.second = token;
+                std::string new_token = token;
+                try {
+                    data.axis.second = std::stoi(new_token);
+                } catch (std::exception& e) {
+                    std::cout << "Syntax error of file is wrong!!!"  << "\n"
+                                << "Please correct syntax of command" << std::endl;
+                    exit(1);
+                }
             }        
            
             this->_info.push_back(data);
@@ -95,16 +109,16 @@ void Parser::validateData() {
         exit(1);
     }
 
-    int dimen;
-    try {
-        dimen = std::stoi((*dimension).axis.first);
-    } catch (std::exception& e) {
-        std::cout << "Please provide true syntax of dimension" << std::endl;
-        exit(1);
-    }
+    int dimen = (*dimension).axis.first;
+    // try {
+    //     dimen = std::stoi((*dimension).axis.first);
+    // } catch (std::exception& e) {
+    //     std::cout << "Please provide true syntax of dimension" << std::endl;
+    //     exit(1);
+    // }
 
     auto data = std::find_if(_info.begin(), _info.end(), [&dimen](const auto &elem){
-        return ((std::stoi(elem.axis.first) >= dimen || std::stoi(elem.axis.second) >= dimen) && elem.command != "dimension");
+        return (((elem.axis.first) >= dimen || (elem.axis.second) >= dimen) && elem.command != "dimension");
     });
 
     if (data != _info.end()) {

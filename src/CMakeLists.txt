@@ -16,6 +16,8 @@ set(COCCOC_LIBS
 
 add_executable(coccoc ${ALL_OBJECT_FILES})
 
+target_link_libraries(coccoc stdc++fs)
+
 target_include_directories(
         coccoc PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
