@@ -1,0 +1,6 @@
+DIMENSION 9
+line_to                   2,  	2
+line_to		8,	 5
+move_to 	   8,			8
+line_to 	0,		6
+line_to					6 ,		7

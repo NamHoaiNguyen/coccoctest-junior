@@ -1,13 +1,11 @@
 #include "dimension_command.h"
 
 void Dimension::handle(const DataCommand& data) {
-    // std::cout << "dimension handle in algo folder" << std::endl;
     setSize(data);
 } 
 
 void Dimension::setSize(const DataCommand& data) {
     this->_size = (data.axis.first);
-    // std::cout << this->_size << std::endl;
     _square.resize(this->_size, std::vector<int>(this->_size));
 
     this->_dimensionAlgo.dimension = this->_size;

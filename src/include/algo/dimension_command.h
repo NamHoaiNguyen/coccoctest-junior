@@ -12,8 +12,6 @@ class Dimension:  public Command {
         std::vector<std::vector<int>> _square;
 
         /*Store data returned for Algo*/
-        // std::vector<Data> _dataAlgo;
-
         std::weak_ptr<Algo> _algo;
         
         int _size;

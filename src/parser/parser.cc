@@ -7,6 +7,13 @@ void Parser::handleRequest() {
 } 
 
 void Parser::validateFile() {
+    fs::path p (_filePath);
+
+    if (!fs::exists(p)) {
+        std::cout << "Please recheck! The file doesn't exist!!!" << std::endl;
+        exit(1);
+    }
+
     try {
         if (fs::is_regular_file(_filePath)) {
             readFile();
@@ -14,6 +21,7 @@ void Parser::validateFile() {
     }
     catch(fs::filesystem_error const& ex) {
         std::cout << "Invalid path!\n" << ex.what() << '\n';
+        exit(1);
     }
 }
 
@@ -22,7 +30,7 @@ void Parser::readFile() {
     fp.open(_filePath, std::ios::in);
     if(!fp.good()) {
         std::cout<<"File Not Found\n";
-        return;
+        exit(1);
     }
     parseData(fp);
 
@@ -48,49 +56,65 @@ void Parser::parseData(std::ifstream& fp) {
             new_line.erase(std::remove(index_space_before, new_line.end(), ' '), new_line.end());
         }
         
-        std::cout << "check new line " << new_line << std::endl;
+        // std::cout << "check new line " << new_line << std::endl;
         std::stringstream s(new_line);
         while (s >> word >> axis) {
             std::string token;
-            size_t beg, pos = 0;
 
             /*tolower*/
             std::transform(word.begin(), word.end(), word.begin(), [](const auto& elem){
                 return std::tolower(elem);
             });
 
+            word.erase(std::remove_if(word.begin(), word.end(), [](const auto& c){
+                return !std::isalnum(c);
+            }), word.end());
 
             DataCommand data;
             data.command = word;
             _setCommands.insert(word);
 
-            while ((beg = axis.find_first_not_of(delimiter, pos)) != std::string::npos) {
-                pos = axis.find_first_of(delimiter, beg + 1);
+            std::size_t prev = 0, pos;
+            while ((pos = axis.find_first_of(" ,", prev)) != std::string::npos)  // only look for . and ~s
+            {
                 
-                token = axis.substr(beg, pos - beg);
-                if (!parseFirst) {
-                    std::string new_token = token;
+                if (pos > prev) {
+                    token = axis.substr(prev, pos-prev);
                     try {
-                        data.axis.first = std::stoi(new_token);
+                        data.axis.first = std::stoi(token);
                         parseFirst = true;
                     } catch (std::exception& e) {
                         std::cout << "Syntax error of file is wrong!!!"  << "\n"
                                   << "Please correct syntax of command" << std::endl;
                         exit(1);
                     }
-                }    
-            }
-            if (data.command != "dimension") {
-                std::string new_token = token;
-                try {
-                    data.axis.second = std::stoi(new_token);
-                } catch (std::exception& e) {
-                    std::cout << "Syntax error of file is wrong!!!"  << "\n"
-                                << "Please correct syntax of command" << std::endl;
-                    exit(1);
                 }
-            }        
-           
+                prev = pos+1;
+            }
+            if (prev < line.length()) {
+                token = axis.substr(prev, std::string::npos);
+                if (data.command == "dimension") {
+                    try {
+                        data.axis.first = std::stoi(token);
+                        parseFirst = true;
+                    } catch (std::exception& e) {
+                        std::cout << "Syntax error of file is wrong!!!"  << "\n"
+                                  << "Please correct syntax of command" << std::endl;
+                        exit(1);
+                    }
+                    data.axis.second = 0;
+                } else {
+                    try {
+                        data.axis.second = std::stoi(token);
+                        parseFirst = true;
+                    } catch (std::exception& e) {
+                        std::cout << "Syntax error of file is wrong!!!"  << "\n"
+                                  << "Please correct syntax of command" << std::endl;
+                        exit(1);
+                    }
+                }
+            }
+
             this->_info.push_back(data);
         }
     }
@@ -110,12 +134,6 @@ void Parser::validateData() {
     }
 
     int dimen = (*dimension).axis.first;
-    // try {
-    //     dimen = std::stoi((*dimension).axis.first);
-    // } catch (std::exception& e) {
-    //     std::cout << "Please provide true syntax of dimension" << std::endl;
-    //     exit(1);
-    // }
 
     auto data = std::find_if(_info.begin(), _info.end(), [&dimen](const auto &elem){
         return (((elem.axis.first) >= dimen || (elem.axis.second) >= dimen) && elem.command != "dimension");

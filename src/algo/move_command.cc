@@ -2,17 +2,14 @@
 #include "algo.h"
 
 void Move::handle(const DataCommand& data) {
-    // std::cout << "move handle in algo folder" << std::endl;
     setUpParams(data);
 } 
 
 void Move::setUpParams(const DataCommand& data) {
-    // auto axis = std::make_pair<std::stoi(data.axis.first), std::stoi(data.axis.second)>;
     AxisAlgo axis;
 
     axis.x = (data.axis.first);
     axis.y = (data.axis.second);
-    /*Care!!! Maybe segmant fault when adding reference to vector*/
     _historyMoves.push_back(data);
     _history.push_back(axis);
 
@@ -22,9 +19,6 @@ void Move::setUpParams(const DataCommand& data) {
     if (auto subscriber = this->_algo.lock(); subscriber) {
         prevData = subscriber->getPrevData();
     }
-
-    // std::cout << prevData.command << " " << prevData.axis.first << " " << prevData.axis.second << " " << __FILE__ << " " << __func__ << std::endl;
-
 }
 
 std::vector<AxisAlgo> Move::getAxis() {

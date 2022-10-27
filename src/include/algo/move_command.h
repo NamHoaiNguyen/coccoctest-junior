@@ -2,7 +2,6 @@
 #define MOVE_COMMAND_H
 
 #include "command.h"
-#include "../common/axis.h"
 #include "../common/command_data.h"
 
 #include <iostream>
@@ -12,11 +11,6 @@
 
 class Move : public Command {
     private:
-        // struct Axis {
-        //     int axis_x;
-        //     int axis_y;
-        // };
-
         std::shared_ptr<Command> _command;
 
         std::weak_ptr<Algo> _algo;

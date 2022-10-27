@@ -1,7 +1,6 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include "../common/axis.h"
 #include "../common/command_data.h"
 
 #include <memory>

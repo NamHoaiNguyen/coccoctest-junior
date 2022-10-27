@@ -3,11 +3,6 @@
 
 #include<string>
 
-// struct DataCommand {
-//     std::string command;
-//     std::pair<std::string, std::string> axis;
-// };
-
 struct DataCommand {
     std::string command;
     std::pair<int, int> axis;

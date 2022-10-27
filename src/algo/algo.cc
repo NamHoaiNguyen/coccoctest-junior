@@ -12,10 +12,10 @@ void Algo::initialize() {
         if (elem == "dimension") {
             _setCommand[elem] = std::make_shared<Dimension>();
             _setCommand[elem]->addAlgo(this->weak_from_this());
-        } else if (elem == "line_to") {
+        } else if (elem == "lineto") {
             _setCommand[elem] = std::make_shared<Line>();
             _setCommand[elem]->addAlgo(this->weak_from_this());
-        } else if (elem == "move_to") {
+        } else if (elem == "moveto") {
             _setCommand[elem] = std::make_shared<Move>();
             _setCommand[elem]->addAlgo(this->weak_from_this());
         }
@@ -38,9 +38,9 @@ void Algo::execute() {
             if (dimensionHandle != _setCommand.end()) {
                 dimensionHandle->second->handle(elem);
             }
-        } else if (elem.command == "line_to") {
+        } else if (elem.command == "lineto") {
             if (index == 1 && indexLine == 0) {
-                this->_prevData.command = "line_to";
+                this->_prevData.command = "lineto";
                 _prevData.axis.first = 0;
                 _prevData.axis.second = 0;
                 indexLine++;
@@ -53,7 +53,7 @@ void Algo::execute() {
             if (lineHandle != _setCommand.end()) {
                 lineHandle->second->handle(elem);
             }
-        } else if (elem.command == "move_to") {
+        } else if (elem.command == "moveto") {
             auto moveHandle = _setCommand.find(elem.command);
 
             assert(moveHandle != _setCommand.end());
@@ -93,7 +93,7 @@ void Algo::preprocessData() {
 
 void Algo::setInfoForRender() {
     auto dimensionHandle  = _setCommand.find("dimension");
-    auto lineHandle = _setCommand.find("line_to");
+    auto lineHandle = _setCommand.find("lineto");
 
     assert(dimensionHandle != _setCommand.end());
     assert(lineHandle != _setCommand.end());

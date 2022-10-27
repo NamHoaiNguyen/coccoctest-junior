@@ -2,7 +2,6 @@
 #define LINE_COMMAND_H
 
 #include "command.h"
-#include "../common/axis.h"
 #include "../common/command_data.h"
 
 #include <iostream>
@@ -26,9 +25,6 @@ class Line : public Command {
         /*Save axis of */
         std::vector<AxisAlgo> _historyLine;
 
-        /*Save axis of all points needed to render*/
-        // std::vector<Axis> _result;
-
         std::vector<AxisAlgo> _result;
 
         int start_x = 0;
@@ -48,11 +44,9 @@ class Line : public Command {
 
         void execute();
 
-        void midPoint(int X1, int Y1, int X2, int Y2);
+        int roundFloat(float n);
 
-        int roundt(float n);
-
-        void DDALine(int X1, int Y1, int X2, int Y2);
+        void GenerateLine(int X1, int Y1, int X2, int Y2);
 
         void checkResult();
 };

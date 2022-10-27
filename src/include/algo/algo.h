@@ -1,7 +1,6 @@
 #ifndef ALGO_H
 #define ALGO_H
 
-#include "../common/axis.h"
 #include "../common/command_data.h"
 #include "command.h"
 #include "dimension_command.h"

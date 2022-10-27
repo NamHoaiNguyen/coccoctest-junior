@@ -12,24 +12,12 @@ class ProgramContext {
         
     public:
         void setState(std::shared_ptr<State> state); 
-        // {
-        //     this->_state = state;
-        // }
 
         void applyState();
-        // {
-        //     this->_state->handleRequest();
-        // }
 
         void setStateM(std::unique_ptr<State> state);
-        // {
-        //     this->m_state = std::move(state);
-        // }
 
         void applyStateM();
-        // {
-        //     this->m_state->handleRequest();
-        // }
 };
 
 #endif

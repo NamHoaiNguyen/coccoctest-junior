@@ -1,10 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-// #include "command.h"
-// #include "dimension_command.h"
-// #include "line_command.h"
-// #include "move_command.h"
+
 #include "../common/command_data.h"
 #include "../execution/state.h"
 
@@ -24,18 +21,16 @@
 
 namespace fs = std::experimental::filesystem;
 
-// struct Data {
-//     std::string command;
-//     std::pair<std::string, std::string> axis;
-// };
-
 class Parser : public State {
     private:    
         std::string _filePath;
 
-        std::string delimiter = " ,";
+        std::string delimiter = ",";
 
         std::string delim = " ";
+
+        std::vector<char> delims = {',', ' '};
+
 
         std::vector<DataCommand> _info;
 

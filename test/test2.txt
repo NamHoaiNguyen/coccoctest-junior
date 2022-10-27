@@ -1,4 +1,4 @@
-DIMENSion           5
+DIMENSion           2
 MOVE_to     1,    4
 LINE_to                 3,                                                  3
 line_to             2,              3
