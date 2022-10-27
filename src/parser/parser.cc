@@ -15,12 +15,15 @@ void Parser::validateFile() {
     }
 
     try {
-        if (fs::is_regular_file(_filePath)) {
+        if (fs::is_regular_file(p)) {
             readFile();
+        } else {
+            std::cout << "Not a file!!!" << std::endl;
+            exit(1);
         }
     }
     catch(fs::filesystem_error const& ex) {
-        std::cout << "Invalid path!\n" << ex.what() << '\n';
+        std::cout << "Not a file!\n" << ex.what() << '\n';
         exit(1);
     }
 }
