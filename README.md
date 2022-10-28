@@ -16,4 +16,4 @@
 
 * Go to "build" directory and run ""make.."
 * Run make generating "coccoc" executable file in "src" folder.
-* Run ../src/coccoc + path-to-text-file
+* Run ./src/coccoc + path-to-text-file
